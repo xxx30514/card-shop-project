@@ -1,0 +1,66 @@
+spring:
+#  mvc:
+#    static-path-pattern: /res/**
+#  web:
+#    resources: 
+#      static-locations: classpath:/static/
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+# 資料庫配置   
+     
+  datasource:
+    url: jdbc:mysql://localhost:3306/cardstoredb?serverTimezone=GMT%2B8
+    username: pm
+    password: pm
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart: 
+      max-file-size: 10MB
+      max-request-size: 100MB
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest 
+    virtual-host: /
+
+    
+       
+        
+#    type: com.zaxxer.hikari.HikariDataSource
+    
+# mybatis  config-location: 與 configuration: 會衝突 僅能存在一個配置
+
+mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mysite.cardstore/mapper/*.xml
+  configuration: # 指定mybatis相關配置
+  
+    map-underscore-to-camel-case: true
+    
+mybatis-plus:
+  mapper-locations: classpath:mysite.cardstore/mapper/*.xml 
+  configuration:
+    map-underscore-to-camel-case: true    
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      
+server:
+  port: 80
+  servlet:
+    session:
+      timeout: 0
+    encoding: 
+      charset: UTF-8
+      force: true
+      enabled: true      
+  tomcat:
+    uri-encoding: UTF-8
+    
+cardstore:
+ path: C:\myproject\testimg\    
+  

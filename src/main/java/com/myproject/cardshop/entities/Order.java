@@ -1,4 +1,4 @@
-package com.myproject.cardshop.pojo;
+package com.myproject.cardshop.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

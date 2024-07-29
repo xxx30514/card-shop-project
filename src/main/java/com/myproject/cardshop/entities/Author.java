@@ -8,11 +8,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "author_tbl")
 public class Author {
@@ -30,7 +34,7 @@ public class Author {
 	
 	private int age;
 
-	@Column(updatable = false,nullable = false)
+	@Column(updatable = false,nullable = false,columnDefinition ="DATETIME(2)")
 	private LocalDateTime createDateTime;
 	
 	@Column(insertable = false)

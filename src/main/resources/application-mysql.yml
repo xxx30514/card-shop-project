@@ -36,23 +36,7 @@ spring:
         
 #    type: com.zaxxer.hikari.HikariDataSource
     
-# mybatis  config-location: 與 configuration: 會衝突 僅能存在一個配置
 
-mybatis:
-#  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mysite.cardstore/mapper/*.xml
-  configuration: # 指定mybatis相關配置
-  
-    map-underscore-to-camel-case: true
-    
-mybatis-plus:
-  mapper-locations: classpath:mysite.cardstore/mapper/*.xml 
-  configuration:
-    map-underscore-to-camel-case: true    
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      id-type: auto
       
 server:
   port: 80

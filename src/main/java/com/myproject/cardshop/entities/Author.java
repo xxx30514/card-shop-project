@@ -1,28 +1,38 @@
 package com.myproject.cardshop.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@EqualsAndHashCode(callSuper = true)//有繼承關係時 子類別要使用
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 @Table(name = "author_tbl")
-public class Author {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class Author extends BaseEntity {
+	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer id;
 	
 	@Column(length = 50)
 	private String firstName;
@@ -39,6 +49,9 @@ public class Author {
 	
 	@Column(insertable = false)
 	private LocalDateTime updateDateTime;
+	
+	@ManyToMany(mappedBy = "authors")
+	private List<Course> courses;
 	
 	
 }

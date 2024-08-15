@@ -2,6 +2,8 @@ package com.myproject.cardshop.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,8 +34,8 @@ public class Section {
 	private int sectionOrder;
 	
 	@ManyToOne
-	@JoinColumn(name = "course_id")
-	//多對一 在多的一方建立外來鍵 
+	@JoinColumn(name = "course_id")//多對一 在多的一方建立外來鍵 
+	@JsonBackReference //雙向關聯時避免無窮迴圈 需要使用@JsonBackReference註解表示被控方(一對多的多) 或用DTO處理雙向關係的遞迴問體
 	private Course course;
 	
 	@OneToMany(mappedBy = "section")

@@ -2,6 +2,9 @@ package com.myproject.cardshop.entities;
 
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,7 +46,7 @@ public class Course {
 	)
 	private List<Author> authors;
 	
-	@OneToMany(mappedBy = "course")
-	//一對多 course為一  section為多 多用集合處理 mappedBy = "course" 指定Section的course屬性管理關聯
+	@OneToMany(mappedBy = "course")//一對多 course為一  section為多 多用集合處理 mappedBy = "course" 指定Section的course屬性管理關聯
+	@JsonManagedReference //雙向關聯時避免無窮迴圈 需要使用@JsonManagedReference註解表示主控方(一對多的一) 或用DTO處理雙向關係的遞迴問體
 	private List<Section> sections;
 }

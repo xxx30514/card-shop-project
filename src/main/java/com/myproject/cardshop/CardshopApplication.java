@@ -22,9 +22,9 @@ public class CardshopApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CardshopApplication.class, args);
 	}
-	
-	@Bean
-	public CommandLineRunner commandLineRunner(AuthorRepository repository,CourseRepository courseRepository,VideoRepository videoRepository) {
+
+    @Bean
+    CommandLineRunner commandLineRunner(AuthorRepository repository, CourseRepository courseRepository, VideoRepository videoRepository) {
 		return args->{
 			Author author = Author.builder().firstName("Jason").lastName("Yeh").age(31).email("test@gmail.com").createDateTime(LocalDateTime.now()).build();
 			Author author2 = Author.builder().firstName("James").lastName("Yeh").age(31).email("test1@gmail.com").createDateTime(LocalDateTime.now()).build();

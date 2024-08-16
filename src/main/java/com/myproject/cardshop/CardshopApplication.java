@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import com.github.javafaker.Faker;
 import com.myproject.cardshop.entities.Author;
 import com.myproject.cardshop.entities.Course;
 import com.myproject.cardshop.entities.Video;
@@ -26,8 +28,14 @@ public class CardshopApplication {
     @Bean
     CommandLineRunner commandLineRunner(AuthorRepository repository, CourseRepository courseRepository, VideoRepository videoRepository) {
 		return args->{
-			Author author = Author.builder().firstName("Jason").lastName("Yeh").age(31).email("test@gmail.com").createDateTime(LocalDateTime.now()).build();
-			Author author2 = Author.builder().firstName("James").lastName("Yeh").age(31).email("test1@gmail.com").createDateTime(LocalDateTime.now()).build();
+			Faker faker = new Faker();
+			LocalDateTime currentDateTime = LocalDateTime.now();
+			for (int i = 0; i < 50; i++) {
+				Author author = Author.builder().firstName(faker.name().firstName()).lastName(faker.name().lastName()).age(faker.number().numberBetween(25, 50)).email("fake"+i+"@gmail.com").createDateTime(currentDateTime).build();
+				repository.save(author);
+			}
+			Author author = Author.builder().firstName("Jason").lastName("Yeh").age(31).email("test@gmail.com").createDateTime(currentDateTime).build();
+			Author author2 = Author.builder().firstName("James").lastName("Yeh").age(31).email("test1@gmail.com").createDateTime(currentDateTime).build();
 			List<Author> authors = new ArrayList<>();
 			authors.add(author);
 			authors.add(author2);

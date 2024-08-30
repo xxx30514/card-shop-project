@@ -1,5 +1,6 @@
 package com.myproject.cardshop.specification;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.myproject.cardshop.entities.Author;
@@ -13,7 +14,8 @@ public class AuthorSpecification {
 	public static Specification<Author> hasAge(int age) {
 		return (Root<Author> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
 			if (age < 0) {
-				//return null;
+				//builder.conjunction();return true  建立and查詢時使用條件為空也不會影響查詢結果 僅單獨使用此方法且age<0時將忽略此條件 回傳其他符合的資料
+				//return false 建立or查詢時使用 僅單獨使用此方法且age<0時會回傳所有資料; 
 				return builder.disjunction();
 			}
 			return builder.equal(root.get("age"), age);
@@ -28,10 +30,12 @@ public class AuthorSpecification {
 	}
 	public static Specification<Author> firstNameLike(String firstName) {
 		return (root, query, builder) -> {
-			if (firstName == null) {
+			//isBlank 檢測是否null 空字串 空白
+			if (StringUtils.isBlank(firstName)) {
 				return builder.disjunction();
 			}
-			return builder.like(root.get("firstName"), "%"+firstName+"%");
+			//處理大小寫敏感的問題
+			return builder.like(builder.lower(root.get("firstName")), "%"+firstName.toLowerCase()+"%");
 		};
 	}
 }

@@ -7,6 +7,7 @@ import com.myproject.cardshop.entities.Author;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 public class AuthorSpecification {
@@ -37,5 +38,15 @@ public class AuthorSpecification {
 			//處理大小寫敏感的問題
 			return builder.like(builder.lower(root.get("firstName")), "%"+firstName.toLowerCase()+"%");
 		};
+	}
+	//匿名內部類別寫法
+	public static Specification<Author> firstNameLike1(String firstName) {
+		return new Specification<Author>() {
+			private static final long serialVersionUID = 1L;
+			@Override
+            public Predicate toPredicate(Root<Author> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.like(root.get("firstName"), "%" + firstName + "%");
+            }
+        };
 	}
 }

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,9 +31,11 @@ public class BaseEntity {
 	private Integer id;
 	
 	@CreationTimestamp //首次插入資料時設置當前時間
+	//@CreatedDate
 	private LocalDateTime createTime;
 	
 	@UpdateTimestamp //更新時設置當前時間
+	//@LastModifiedDate
 	private LocalDateTime updateTime;
 	
 	private String createUser;

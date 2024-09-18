@@ -17,7 +17,7 @@ public class AuthorSpecification {
 			if (age < 0) {
 				//builder.conjunction();return true  建立and查詢時使用條件為空也不會影響查詢結果 僅單獨使用此方法且age<0時將忽略此條件 回傳其他符合的資料
 				//return false 建立or查詢時使用 僅單獨使用此方法且age<0時會回傳所有資料; 
-				return builder.disjunction();
+				return builder.conjunction();
 			}
 			return builder.equal(root.get("age"), age);
 		};

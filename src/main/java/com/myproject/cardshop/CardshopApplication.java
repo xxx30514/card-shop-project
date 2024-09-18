@@ -65,7 +65,7 @@ public class CardshopApplication {
 			//repository.updateAuthor(32, 1);	
 			//repository.findByNamedQuery(40).forEach(System.out::println);// 要在Author中的Course集合中加上fetch = FetchType.EAGER 否則會有LazyInitializationException
 			//repository.updateByNamedQuery(32, 2);
-			Specification<Author> specification = Specification.where(AuthorSpecification.hasAge(-1)).or(AuthorSpecification.firstNameLike("MA"));
+			Specification<Author> specification = Specification.where(AuthorSpecification.hasAge(-1)).and(AuthorSpecification.firstNameLike("MA"));
 			repository.findAll(specification).forEach(System.out::println);
 		};
 	}

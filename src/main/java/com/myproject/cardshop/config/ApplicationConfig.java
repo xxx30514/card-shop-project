@@ -2,6 +2,7 @@ package com.myproject.cardshop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,9 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import com.myproject.cardshop.auditing.ApplicationAuditorAware;
 import com.myproject.cardshop.repositories.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -57,5 +57,15 @@ public class ApplicationConfig {
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	/**
+	 * 註冊 AuditorAware 的實現
+	 * 審計功能 獲取當前使用者
+	 * 這個Bean的名稱要與配置類相同 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
+	 */
+	@Bean
+	AuditorAware<String> auditorAware(){
+		return new ApplicationAuditorAware();
 	}
 }

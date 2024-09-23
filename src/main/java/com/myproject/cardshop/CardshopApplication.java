@@ -3,14 +3,13 @@ package com.myproject.cardshop;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.Hibernate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.domain.Specification;
-
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import com.github.javafaker.Faker;
 import com.myproject.cardshop.entities.Author;
 import com.myproject.cardshop.entities.Course;
@@ -20,10 +19,8 @@ import com.myproject.cardshop.repositories.CourseRepository;
 import com.myproject.cardshop.repositories.VideoRepository;
 import com.myproject.cardshop.specification.AuthorSpecification;
 
-import jakarta.persistence.FetchType;
-
-
 @SpringBootApplication
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class CardshopApplication {
 
 	public static void main(String[] args) {
@@ -41,8 +38,10 @@ public class CardshopApplication {
 //				authorList.add(author);
 //			}
 //			repository.saveAll(authorList);
-//			Author author = Author.builder().firstName("Jason").lastName("Yeh").age(31).email("test@gmail.com").createDateTime(currentDateTime).build();
-//			Author author2 = Author.builder().firstName("James").lastName("Yeh").age(31).email("test1@gmail.com").createDateTime(currentDateTime).build();
+//			Author author = Author.builder().id(61).firstName("Jason").lastName("Yeh").age(31).email("ime4@gmail.com").build();
+//			repository.save(author);
+//			Author author2 = Author.builder().firstName("James").lastName("Yeh").age(31).email("0450454@gmail.com").build();
+//			repository.save(author2);
 //			List<Author> authors = new ArrayList<>();
 //			authors.add(author);
 //			authors.add(author2);

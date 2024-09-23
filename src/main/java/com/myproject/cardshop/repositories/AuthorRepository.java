@@ -43,4 +43,6 @@ public interface AuthorRepository extends JpaRepository<Author, Integer>, JpaSpe
 	
 	//  select * from author where first_name in ('','','')
 	List<Author> findAllByFirstNameInIgnoreCase(List<String> firstNames);
+	
+	Author findByFirstName(String firstName);
 }

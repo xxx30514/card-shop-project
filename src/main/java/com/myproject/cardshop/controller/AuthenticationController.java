@@ -2,22 +2,13 @@ package com.myproject.cardshop.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.myproject.cardshop.entities.User;
-import com.myproject.cardshop.repositories.UserRepository;
 import com.myproject.cardshop.security.auth.AuthenticateRequset;
 import com.myproject.cardshop.security.auth.AuthenticationResponse;
 import com.myproject.cardshop.security.auth.RegisterRequset;
 import com.myproject.cardshop.service.AuthenticationService;
-
 import lombok.RequiredArgsConstructor;
-
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;

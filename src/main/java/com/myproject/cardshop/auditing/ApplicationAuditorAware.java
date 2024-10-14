@@ -14,13 +14,18 @@ public class ApplicationAuditorAware implements AuditorAware<String> {
 
 	@Override
 	public Optional<String> getCurrentAuditor() {
+		// 取得當前認證資訊
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// 檢查認證狀態
+		// authentication == null 無認證資訊
+		// !authentication.isAuthenticated() 未通過認證
+		// authentication instanceof AnonymousAuthenticationToken 表示匿名使用者
 		if (authentication == null || !authentication.isAuthenticated()
 				|| authentication instanceof AnonymousAuthenticationToken) {
 			return Optional.empty();
 		}
-		User user =(User) authentication.getPrincipal();
-		return Optional.ofNullable(user.getEmail());
+		User user = (User) authentication.getPrincipal();
+		return Optional.ofNullable(user.getUsername());
 	}
 
 }

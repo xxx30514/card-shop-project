@@ -51,7 +51,7 @@ public class JwtServiceImpl implements JwtService {
 	}
 	
 	/**
-	 * 驗證JWT token是否過期
+	 * 驗證JWT token是否有效
 	 */
 	@Override
 	public boolean isTokenVaild(String token, UserDetails userDetails) {

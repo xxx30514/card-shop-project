@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cardshop_db
+      MYSQL_USER: pm
+      MYSQL_PASSWORD: pm
+    volumes:
+      #- D:\docker\my-projects\data\mysql:/var/lib/mysql 
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - cardshop	
+    restart: unless-stopped   
+    
+  mail-dev:
+    container_name: mail-dev
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+    networks:
+      - cardshop
+    restart: unless-stopped 
+    
+volumes:
+  mysql-data:  
+        
+networks:
+  cardshop:
+    driver: bridge  	
+    

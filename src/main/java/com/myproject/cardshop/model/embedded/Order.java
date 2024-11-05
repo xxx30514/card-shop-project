@@ -1,4 +1,4 @@
-package com.myproject.cardshop.entities.embedded;
+package com.myproject.cardshop.model.embedded;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;

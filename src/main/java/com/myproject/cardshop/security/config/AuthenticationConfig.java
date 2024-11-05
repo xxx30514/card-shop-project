@@ -1,4 +1,4 @@
-package com.myproject.cardshop.config;
+package com.myproject.cardshop.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

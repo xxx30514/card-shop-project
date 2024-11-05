@@ -2,8 +2,10 @@ package com.myproject.cardshop.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.myproject.cardshop.entities.User;
-import com.myproject.cardshop.repositories.UserRepository;
+
+import com.myproject.cardshop.model.User;
+import com.myproject.cardshop.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;

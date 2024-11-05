@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import com.github.javafaker.Faker;
-import com.myproject.cardshop.entities.Author;
-import com.myproject.cardshop.entities.Course;
-import com.myproject.cardshop.entities.Video;
-import com.myproject.cardshop.repositories.AuthorRepository;
-import com.myproject.cardshop.repositories.CourseRepository;
-import com.myproject.cardshop.repositories.VideoRepository;
+import com.myproject.cardshop.model.Author;
+import com.myproject.cardshop.model.Course;
+import com.myproject.cardshop.model.Video;
+import com.myproject.cardshop.repository.AuthorRepository;
+import com.myproject.cardshop.repository.CourseRepository;
+import com.myproject.cardshop.repository.VideoRepository;
 import com.myproject.cardshop.specification.AuthorSpecification;
 
 @SpringBootApplication

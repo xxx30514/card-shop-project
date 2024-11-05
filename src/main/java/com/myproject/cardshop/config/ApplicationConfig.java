@@ -12,7 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.myproject.cardshop.auditing.ApplicationAuditorAware;
-import com.myproject.cardshop.repositories.UserRepository;
+import com.myproject.cardshop.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration

@@ -1,4 +1,4 @@
-package com.myproject.cardshop.repositories;
+package com.myproject.cardshop.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.myproject.cardshop.entities.Author;
+import com.myproject.cardshop.model.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer>, JpaSpecificationExecutor<Author>{
 	

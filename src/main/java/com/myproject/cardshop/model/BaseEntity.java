@@ -1,4 +1,4 @@
-package com.myproject.cardshop.entities;
+package com.myproject.cardshop.model;
 
 import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedBy;

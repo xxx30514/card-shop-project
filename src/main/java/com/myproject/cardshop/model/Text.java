@@ -1,4 +1,4 @@
-package com.myproject.cardshop.entities;
+package com.myproject.cardshop.model;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

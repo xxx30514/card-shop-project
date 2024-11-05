@@ -5,7 +5,8 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.myproject.cardshop.entities.User;
+
+import com.myproject.cardshop.model.User;
 
 /**
  * 透過spring security 獲取當前使用者AuditorAware<T> 獲取ID、使用者名稱、email等<String>or<Integer>

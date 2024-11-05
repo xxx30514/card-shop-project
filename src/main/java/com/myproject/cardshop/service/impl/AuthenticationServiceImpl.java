@@ -5,9 +5,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.myproject.cardshop.entities.User;
 import com.myproject.cardshop.entities.enums.Role;
-import com.myproject.cardshop.repositories.UserRepository;
+import com.myproject.cardshop.model.User;
+import com.myproject.cardshop.repository.UserRepository;
 import com.myproject.cardshop.security.auth.AuthenticateRequset;
 import com.myproject.cardshop.security.auth.AuthenticationResponse;
 import com.myproject.cardshop.security.auth.RegisterRequset;

@@ -3,7 +3,7 @@ package com.myproject.cardshop.specification;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.myproject.cardshop.entities.Author;
+import com.myproject.cardshop.model.Author;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

@@ -48,4 +48,8 @@ server:
     
 cardstore:
  path: C:\myproject\testimg\    
-  
+application:
+ security:
+  jwt:
+   secrect-key: sN5MEgklixS7inZPIrg8gus9X+fo7FNRK+ZhjU7nAgI=
+   expiration: 86400000  

@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,10 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtServiceImpl implements JwtService {
 
-	private static final String SECRET_KEY = "sN5MEgklixS7inZPIrg8gus9X+fo7FNRK+ZhjU7nAgI=";
+	@Value("${application.security.jwt.secrect-key}")
+	private String secrectKey;
 	
+	@Value("${application.security.jwt.expiration}")
 	private long expiration;
 
 	/**
@@ -113,7 +116,7 @@ public class JwtServiceImpl implements JwtService {
 	 * 
 	 */
 	private SecretKey getSignInKey() {
-		byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);// 將base64的密鑰解密為位元組
+		byte[] keyBytes = Decoders.BASE64.decode(secrectKey);// 將base64的密鑰解密為位元組
 		return Keys.hmacShaKeyFor(keyBytes); // 生成密鑰
 	}
 

@@ -1,20 +1,30 @@
-package com.myproject.cardshop.entities;
+package com.myproject.cardshop.model;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.myproject.cardshop.entities.enums.Role;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +39,8 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "shop_user")
-public class User implements UserDetails {
+@EntityListeners(AuditingEntityListener.class)
+public class User implements UserDetails, Principal {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,20 +51,50 @@ public class User implements UserDetails {
 	private String firstName;
 
 	private String lastName;
-
+	
+	@Column(unique = true)
 	private String email;
 
 	private String userPassword;
-
-	@Enumerated(EnumType.STRING)
-	private Role role;
+	
+	private boolean accountLocked;
+	
+	private boolean accountEnabled;
+	
+//	@Enumerated(EnumType.STRING)
+//	private Role role;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JsonIgnore//在返回JSON資料時不會出現 防止雙向關聯序列化時的遞迴問題
+	private List<Role> roles;
+	
+	@CreatedDate
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdDate;
+	
+	@LastModifiedDate
+	@Column(insertable = false)
+	private LocalDateTime updatedDate;
+	
+//	@CreatedBy
+//	@Column(updatable = false)
+//	private String createdUser;
+//	
+//	@LastModifiedBy
+//	@Column(insertable = false)
+//	private String updatedUser;
+	
+	@Override
+	public String getName() {
+		return this.email;
+	}
 
 	/**
 	 * 提供使用者權限的集合 根據返回的結果決定使用者是否有權存取特定資源
 	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority(role.name()));
+		//return List.of(new SimpleGrantedAuthority(role.name()));
+		return this.roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
 	}
 
 	@Override
@@ -84,7 +125,7 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !this.accountLocked;
 	}
 
 	/**
@@ -104,7 +145,10 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.accountEnabled;
 	}
-
+	
+	private String fullName() {
+		return this.firstName + " " + this.lastName;
+	}
 }

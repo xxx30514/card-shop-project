@@ -14,7 +14,7 @@ public class AuditingConfig {
 	 * 這個Bean的名稱要與配置類相同 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 	 */
 	@Bean
-	AuditorAware<String> auditorAware(){
+	public AuditorAware<String> auditorAware(){
 		return new ApplicationAuditorAware();
 	}
 }

@@ -1,38 +1,49 @@
 package com.myproject.cardshop.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.myproject.cardshop.model.Role;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder//有繼承關係時使用 父子類別都要使用  @Builder 無繼承關係時使用
-@MappedSuperclass //定義共享屬性與方法提供子類繼承 不會建立對應表格
+@Builder
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+public class Role {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(unique = true)
+	private String name;
+	
+	@ManyToMany(mappedBy = "roles")
+	private List<User> users;
+	
 	@CreatedDate
-	@Column(updatable = false)
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdDate;
 	
 	@LastModifiedDate

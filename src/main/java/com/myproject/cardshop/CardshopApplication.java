@@ -28,7 +28,7 @@ public class CardshopApplication {
 	}
 
     @Bean
-    CommandLineRunner commandLineRunner(AuthorRepository repository, CourseRepository courseRepository, VideoRepository videoRepository) {
+    public CommandLineRunner commandLineRunner(AuthorRepository repository, CourseRepository courseRepository, VideoRepository videoRepository) {
 		return args->{
 //			List<Author> authorList = new ArrayList<>();
 //			Faker faker = new Faker();

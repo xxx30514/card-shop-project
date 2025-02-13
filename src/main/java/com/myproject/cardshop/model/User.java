@@ -147,7 +147,7 @@ public class User implements UserDetails, Principal {
 		return this.accountEnabled;
 	}
 	
-	public String fullName() {
+	public String getFullName() {
 		return this.lastName + " " + this.firstName;
 	}
 }

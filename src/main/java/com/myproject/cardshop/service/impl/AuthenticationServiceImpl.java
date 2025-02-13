@@ -70,14 +70,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				.build();
 		userRepository.save(user);
 		sendValidationEmail(user);
-		String jwtToken = jwtService.generateToken(user);
-		AuthenticationResponse.builder().token(jwtToken).build();
 	}
 	
 	//寄出帳號驗證信
 	private void sendValidationEmail(User user) throws MessagingException {
 		String newToken = generateAndSaveActivationToken(user);
-		emailService.sendEmail(user.getEmail(), user.getFirstName(), EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl, newToken, "帳號啟用");
+		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl, newToken, "【cardshop】會員註冊通知");
 		
 	}
 	

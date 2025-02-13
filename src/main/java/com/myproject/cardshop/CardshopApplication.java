@@ -15,9 +15,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import com.github.javafaker.Faker;
 import com.myproject.cardshop.model.Author;
 import com.myproject.cardshop.model.Course;
+import com.myproject.cardshop.model.Role;
 import com.myproject.cardshop.model.Video;
 import com.myproject.cardshop.repository.AuthorRepository;
 import com.myproject.cardshop.repository.CourseRepository;
+import com.myproject.cardshop.repository.RoleRepository;
 import com.myproject.cardshop.repository.VideoRepository;
 import com.myproject.cardshop.specification.AuthorSpecification;
 
@@ -31,7 +33,7 @@ public class CardshopApplication {
 	}
 
     @Bean
-    public CommandLineRunner commandLineRunner(AuthorRepository repository, CourseRepository courseRepository, VideoRepository videoRepository) {
+    public CommandLineRunner commandLineRunner(AuthorRepository repository, CourseRepository courseRepository, VideoRepository videoRepository, RoleRepository roleRepository) {
 		return args->{
 //			List<Author> authorList = new ArrayList<>();
 //			Faker faker = new Faker();
@@ -69,6 +71,9 @@ public class CardshopApplication {
 			//repository.updateByNamedQuery(32, 2);
 			Specification<Author> specification = Specification.where(AuthorSpecification.hasAge(-1)).and(AuthorSpecification.firstNameLike("MA"));
 			repository.findAll(specification).forEach(System.out::println);
+			if (roleRepository.findByName("USER").isEmpty()) {
+				roleRepository.save(Role.builder().name("USER").build());
+			}
 		};
 	}
 	

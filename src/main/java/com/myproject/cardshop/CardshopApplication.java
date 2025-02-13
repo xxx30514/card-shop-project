@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableAsync;
+
 import com.github.javafaker.Faker;
 import com.myproject.cardshop.model.Author;
 import com.myproject.cardshop.model.Course;
@@ -21,6 +23,7 @@ import com.myproject.cardshop.specification.AuthorSpecification;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableAsync
 public class CardshopApplication {
 
 	public static void main(String[] args) {

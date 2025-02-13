@@ -1,11 +1,15 @@
 package com.myproject.cardshop.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.myproject.cardshop.security.auth.AuthenticateRequset;
 import com.myproject.cardshop.security.auth.AuthenticationResponse;
 import com.myproject.cardshop.security.auth.RegisterRequset;
 import com.myproject.cardshop.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/authentications")
 @RequiredArgsConstructor
+@Tag(name = "Authentication")
 public class AuthenticationController {
 
 	private final AuthenticationService authenticationService;
@@ -26,9 +31,10 @@ public class AuthenticationController {
 	private final UserDetailsService userDetailsService;
 
 	@PostMapping("/register")
-	public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequset request) {
-
-		return ResponseEntity.ok(authenticationService.register(request));
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public ResponseEntity<?> register(@RequestBody @Valid RegisterRequset request) throws MessagingException {
+		authenticationService.register(request);
+		return ResponseEntity.accepted().build();
 	}
 
 	@PostMapping("/authenticate")

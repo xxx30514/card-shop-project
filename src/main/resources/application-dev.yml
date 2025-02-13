@@ -53,3 +53,6 @@ application:
   jwt:
    secrect-key: sN5MEgklixS7inZPIrg8gus9X+fo7FNRK+ZhjU7nAgI=
    expiration: 86400000  
+ mailing:
+  fronted:
+   activation-url: http://localhost:9000/activate-account

@@ -1,9 +1,8 @@
-package com.myproject.cardshop.config;
+package com.myproject.cardshop.auditing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
-import com.myproject.cardshop.auditing.ApplicationAuditorAware;
 
 @Configuration
 public class AuditingConfig {

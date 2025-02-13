@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+//@Configuration 目前在securityConfig設定跨域 測試是否不用配置此項
 public class CorsConfig implements WebMvcConfigurer {
 
 	@Override

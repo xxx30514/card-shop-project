@@ -73,6 +73,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	// 寄出帳號驗證信
 	private void sendValidationEmail(User user) throws MessagingException {
+		  if (user.isAccountEnabled()) {
+		        throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
+		    }
 		String newToken = generateAndSaveActivationToken(user);
 		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl,
 				newToken, "【cardshop】會員註冊通知");
@@ -103,6 +106,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	@Transactional
 	public void activateAccount(String token) throws MessagingException {
+		
 		// 確認啟動碼是否存在
 		Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new RuntimeException("無效的Token"));
 		// 確認啟動碼是否過期
@@ -125,14 +129,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public void resendValidationEmail(String email) throws MessagingException {
 		// 根據 email 查詢 User
 		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalStateException("查無使用者"));
-		// 查詢是否有有效的啟動碼
-		Token token = tokenRepository.findByUserAndExpiredAtAfter(user, LocalDateTime.now()).orElse(null);
-		// 如果找不到有效的 token (過期或沒有)，則重新生成一個新的token 並發送認證信
-		if (token == null) {
-			String newToken = generateAndSaveActivationToken(user);
-			emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT,
-					activationUrl, newToken, "【cardshop】會員註冊通知");
+		 if (user.isAccountEnabled()) {
+		        throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
+		    }
+		// 查詢是否有有效的啟動碼 可能有多個有效token存在 要做處理 只取最後到期的那一個token
+		Token token = tokenRepository.findByUserAndExpiredAtAfter(user, LocalDateTime.now()).stream().reduce((first, second) -> second).orElse(null);
+		// 如果啟動碼有效且距離上次發送不足一定時間　限制再次發送驗證信
+		if (token != null && token.getCreatedAt().plusMinutes(5).isAfter(LocalDateTime.now())) {
+			throw new RuntimeException("您已經在5分鐘內發送過認證信，請稍後在試");
 		}
+		String newToken = generateAndSaveActivationToken(user);
+		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT,
+				activationUrl, newToken, "【cardshop】會員註冊通知");
 	}
 
 }

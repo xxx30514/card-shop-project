@@ -1,7 +1,6 @@
 package com.myproject.cardshop.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.myproject.cardshop.security.auth.AuthenticateRequset;
 import com.myproject.cardshop.security.auth.AuthenticationResponse;
@@ -19,9 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
-@RequestMapping("/authentications")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Tag(name = "Authentication")
 public class AuthenticationController {
@@ -31,16 +32,14 @@ public class AuthenticationController {
 	private final UserDetailsService userDetailsService;
 
 	@PostMapping("/register")
-	@ResponseStatus(HttpStatus.ACCEPTED)
 	public ResponseEntity<?> register(@RequestBody @Valid RegisterRequset request) throws MessagingException {
 		authenticationService.register(request);
 		return ResponseEntity.accepted().build();
 	}
 
-	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticateRequset request) {
-
-		return ResponseEntity.ok(authenticationService.authenticate(request));
+	@PostMapping("/login")
+	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody @Valid AuthenticateRequset request) {
+		return ResponseEntity.ok(authenticationService.login(request));
 	}
 
 	@GetMapping("/{email}")
@@ -51,4 +50,15 @@ public class AuthenticationController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("查無此帳號" + email);
 		}
 	}
+	
+	@GetMapping("/activate-account")
+	public void confirm(@RequestParam String token) throws MessagingException {
+		authenticationService.activateAccount(token);
+	}
+	
+	@PostMapping("/resend-activation-email")
+	public void postMethodName(@RequestBody RegisterRequset request) throws MessagingException {
+		authenticationService.resendValidationEmail(request.getEmail());
+	}
+	
 }

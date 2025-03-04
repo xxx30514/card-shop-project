@@ -8,9 +8,13 @@ import jakarta.mail.MessagingException;
 
 public interface AuthenticationService {
 
-	AuthenticationResponse authenticate(AuthenticateRequset request);
+	AuthenticationResponse login(AuthenticateRequset request);
 	
 	void register(RegisterRequset request) throws MessagingException;
+
+	void activateAccount(String token) throws MessagingException;
+	
+	void resendValidationEmail(String email) throws MessagingException;
 
 
 }

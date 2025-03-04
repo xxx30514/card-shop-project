@@ -139,7 +139,7 @@ public class User implements UserDetails, Principal {
 
 	/**
 	 * 用來判斷使用者是否啟用
-	 * 通常是管理員主動啟用或禁用帳號 例如禁止違規帳號
+	 * 通常是管理員主動啟用或禁用帳號 例如禁止違規帳號 或是尚未經過認證
 	 * @return 如果使用者已被禁用 返回false 表示使用者不應該被授權
 	 */
 	@Override

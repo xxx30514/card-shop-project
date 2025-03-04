@@ -107,7 +107,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new RuntimeException("無效的Token"));
 		// 確認啟動碼是否過期
 		if (LocalDateTime.now().isAfter(savedToken.getExpiredAt())) {
-			// sendValidationEmail(savedToken.getUser()); //應該另外請求新的啟動碼
 			throw new RuntimeException("帳號啟動碼已過期，請重新進行認證");
 		}
 		// 確認使用者是否存在

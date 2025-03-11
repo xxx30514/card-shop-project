@@ -128,7 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public void resendValidationEmail(String email) throws MessagingException {
 		// 根據 email 查詢 User
 		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalStateException("查無使用者"));
-		 if (user.isAccountEnabled() == true) {
+		 if (user.isAccountEnabled()) {
 		        throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
 		    }
 		// 查詢是否有有效的啟動碼 可能有多個有效token存在 要做處理 只取最後到期的那一個token

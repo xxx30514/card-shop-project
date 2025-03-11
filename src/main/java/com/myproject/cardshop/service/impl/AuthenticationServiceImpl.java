@@ -106,7 +106,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	@Transactional
 	public void activateAccount(String token) throws MessagingException {
-		
 		// 確認啟動碼是否存在
 		Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new RuntimeException("無效的Token"));
 		// 確認啟動碼是否過期

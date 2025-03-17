@@ -39,7 +39,7 @@ public class Role {
 	private String name;
 
 	@ManyToMany(mappedBy = "roles")
-	@JsonIgnore //在返回JSON資料時不會出現 防止雙向關聯序列化時的遞迴問題
+	@JsonIgnore // 在返回JSON資料時不會出現 防止雙向關聯序列化時的遞迴問題
 	private List<User> users;
 
 	@CreatedDate
@@ -51,7 +51,7 @@ public class Role {
 	private LocalDateTime updatedDate;
 
 	@CreatedBy
-	@Column(updatable = false)
+	@Column(nullable = false, updatable = false)
 	private String createdUser;
 
 	@LastModifiedBy

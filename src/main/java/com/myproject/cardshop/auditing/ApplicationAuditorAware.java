@@ -23,7 +23,7 @@ public class ApplicationAuditorAware implements AuditorAware<String> {
 		// authentication instanceof AnonymousAuthenticationToken 表示匿名使用者
 		if (authentication == null || !authentication.isAuthenticated()
 				|| authentication instanceof AnonymousAuthenticationToken) {
-			return Optional.empty();
+			return Optional.of("anonymous"); //返回預設值
 		}
 		User user = (User) authentication.getPrincipal();
 		return Optional.ofNullable(user.getUsername());

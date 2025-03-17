@@ -63,7 +63,6 @@ public class User implements UserDetails, Principal {
 //	@Enumerated(EnumType.STRING)
 //	private Role role;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonIgnore//在返回JSON資料時不會出現 防止雙向關聯序列化時的遞迴問題
 	private List<Role> roles;
 	
 	@CreatedDate

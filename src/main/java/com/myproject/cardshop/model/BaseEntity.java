@@ -32,7 +32,7 @@ public abstract class BaseEntity {
 	private Integer id;
 	
 	@CreatedDate
-	@Column(updatable = false)
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdDate;
 	
 	@LastModifiedDate
@@ -40,7 +40,7 @@ public abstract class BaseEntity {
 	private LocalDateTime updatedDate;
 	
 	@CreatedBy
-	@Column(updatable = false)
+	@Column(nullable = false, updatable = false)
 	private String createdUser;
 	
 	@LastModifiedBy

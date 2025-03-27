@@ -24,9 +24,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Role {

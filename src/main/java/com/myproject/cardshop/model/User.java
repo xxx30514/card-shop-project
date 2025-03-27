@@ -33,9 +33,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "shop_user")
 @EntityListeners(AuditingEntityListener.class)

@@ -47,8 +47,8 @@ public class EmailServiceImpl implements EmailService {
         //存儲和傳遞模板渲染所需的變量
         Context context = new Context();
         context.setVariables(properties);
-        //寄件人信箱
-        mimeMessageHelper.setFrom("xxx30514@gmail.com");
+        //寄件人信箱或名稱+信箱 名稱若有特殊字元要另外處理編碼
+        mimeMessageHelper.setFrom("cardshop <xxx30514@gmail.com>");
         //收件人信箱
         mimeMessageHelper.setTo(to);
         //email主題

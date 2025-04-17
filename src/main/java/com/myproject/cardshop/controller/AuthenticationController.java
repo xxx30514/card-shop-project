@@ -58,7 +58,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/resend-activation-email")
-	public void postMethodName(@RequestBody RegisterRequset request) throws MessagingException {
+	public void resendEmail(@RequestBody RegisterRequset request) throws MessagingException {
 		authenticationService.resendValidationEmail(request.getEmail());
 	}
 	

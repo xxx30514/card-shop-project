@@ -17,8 +17,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AuthenticateRequset {
 	
-	@Email(message = "Email格式錯誤")
-	@NotBlank(message = "Email欄位不可為空")
+	@Email(message = "帳號格式錯誤")
+	@NotBlank(message = "帳號欄位不可為空")
 	private String email;
 	
 	@NotBlank(message = "密碼欄位不可為空")

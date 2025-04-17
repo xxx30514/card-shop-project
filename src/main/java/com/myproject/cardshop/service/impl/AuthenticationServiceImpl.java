@@ -56,6 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		HashMap<String, Object> claims = new HashMap<String, Object>();
 		User user = ((User) auth.getPrincipal()); // 直接從 Authentication 取得 User 物件
 		claims.put("fullName", user.getFullName());
+		claims.put("userId", user.getId());
 		String jwtToken = jwtService.generateToken(claims, user);
 		return AuthenticationResponse.builder().token(jwtToken).build();
 	}
@@ -135,7 +136,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		Token token = tokenRepository.findByUserAndExpiredAtAfter(user, LocalDateTime.now()).stream().reduce((first, second) -> second).orElse(null);
 		// 如果啟動碼有效且距離上次發送不足一定時間　限制再次發送驗證信
 		if (token != null && token.getCreatedAt().plusMinutes(5).isAfter(LocalDateTime.now())) {
-			throw new RuntimeException("您已經在5分鐘內發送過認證信，請稍後在試");
+			throw new RuntimeException("您已經在5分鐘內發送過認證信，請稍後再試");
 		}
 		String newToken = generateAndSaveActivationToken(user);
 		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT,

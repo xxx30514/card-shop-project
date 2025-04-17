@@ -1,4 +1,4 @@
-package com.myproject.cardshop.security.auth;
+package com.myproject.cardshop.security.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,15 +15,20 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticateRequset {
-	
+public class RegisterRequset {
+
+	@NotBlank(message = "姓名欄位不可為空")
+	private String firstName;
+
+	@NotBlank(message = "姓名欄位不可為空")
+	private String lastName;
+
 	@Email(message = "Email格式錯誤")
 	@NotBlank(message = "Email欄位不可為空")
 	private String email;
-	
+
 	@NotBlank(message = "密碼欄位不可為空")
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).*$", message = "密碼需包含至少一個大寫字母與至少一個小寫字母")
 	@Size(min = 8, max = 15, message = "密碼長度需介於8至15個字元")
 	private String password;
-	
 }

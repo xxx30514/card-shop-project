@@ -2,9 +2,10 @@ package com.myproject.cardshop.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.myproject.cardshop.security.auth.AuthenticateRequset;
-import com.myproject.cardshop.security.auth.AuthenticationResponse;
-import com.myproject.cardshop.security.auth.RegisterRequset;
+
+import com.myproject.cardshop.security.dto.AuthenticateRequset;
+import com.myproject.cardshop.security.dto.AuthenticationResponse;
+import com.myproject.cardshop.security.dto.RegisterRequset;
 import com.myproject.cardshop.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;

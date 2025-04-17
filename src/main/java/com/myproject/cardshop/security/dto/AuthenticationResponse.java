@@ -1,4 +1,4 @@
-package com.myproject.cardshop.security.auth;
+package com.myproject.cardshop.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

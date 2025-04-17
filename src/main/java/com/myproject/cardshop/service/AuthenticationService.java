@@ -1,8 +1,8 @@
 package com.myproject.cardshop.service;
 
-import com.myproject.cardshop.security.auth.AuthenticateRequset;
-import com.myproject.cardshop.security.auth.AuthenticationResponse;
-import com.myproject.cardshop.security.auth.RegisterRequset;
+import com.myproject.cardshop.security.dto.AuthenticateRequset;
+import com.myproject.cardshop.security.dto.AuthenticationResponse;
+import com.myproject.cardshop.security.dto.RegisterRequset;
 
 import jakarta.mail.MessagingException;
 

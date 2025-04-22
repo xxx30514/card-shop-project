@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myproject.cardshop.model.User;
 import com.myproject.cardshop.repository.UserRepository;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
@@ -28,4 +32,23 @@ public class DemoController {
 	public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable("email") String email) {
 		return ResponseEntity.ok(userRepository.findByEmail(email));
 	}
+	 @GetMapping("/test/expired")
+	    public String throwExpiredJwtException() {
+	        throw new ExpiredJwtException(null, null, "模擬：JWT 已過期");
+	    }
+
+	    @GetMapping("/test/malformed")
+	    public String throwMalformedJwtException() {
+	        throw new MalformedJwtException("模擬：JWT 格式錯誤");
+	    }
+
+	    @GetMapping("/test/signature")
+	    public String throwSignatureException() {
+	        throw new SignatureException("模擬：JWT 簽名無效");
+	    }
+	    @GetMapping("/test/messaging")
+	    public String throwMessagingException(Exception exception) throws MessagingException {
+	        throw new  MessagingException(exception.getMessage());
+	    }
+	  
 }

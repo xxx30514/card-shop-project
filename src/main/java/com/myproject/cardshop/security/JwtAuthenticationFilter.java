@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 /**
- * JWT身份驗證過濾
+ * JWT身份驗證過濾器
  */
 @Component
 @RequiredArgsConstructor // 省略建構子注入

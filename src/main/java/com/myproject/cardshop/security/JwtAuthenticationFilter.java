@@ -10,6 +10,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.myproject.cardshop.service.JwtService;
+import com.myproject.cardshop.util.JwtErrorResponseUtil;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
+		
 		final String authHeader = request.getHeader("Authorization");
 		final String jwt;
 		final String userEmail;
@@ -44,20 +50,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 		// 解析JWT並取得使用者Email。
 		jwt = authHeader.substring(7);
-		userEmail = jwtService.extractUsername(jwt);
-		// 確認使用者是否已經驗證 若未驗證則進行 JWT 驗證
-		if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-			// 如果JWT有效 將使用者存入SecurityContext 讓Spring Security管理
-			if (jwtService.isTokenVaild(jwt, userDetails)) {
-				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
-				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				// 將使用者存入SecurityContext
-				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+		
+		try {
+			userEmail = jwtService.extractUsername(jwt);
+			// 確認使用者是否已經驗證 若未驗證則進行 JWT 驗證
+			if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+				UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+				// 如果JWT有效 將使用者存入SecurityContext 讓Spring Security管理
+				if (jwtService.isTokenVaild(jwt, userDetails)) {
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+							userDetails, null, userDetails.getAuthorities());
+					authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					// 將使用者存入SecurityContext
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+				}
 			}
+			filterChain.doFilter(request, response);
+		} catch (ExpiredJwtException | MalformedJwtException | SignatureException exception) {
+			JwtErrorResponseUtil.writeJwtErrorResponse(response, exception);
 		}
-		filterChain.doFilter(request, response);
 	}
 
 }

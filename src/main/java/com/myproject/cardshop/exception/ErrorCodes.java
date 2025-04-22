@@ -19,7 +19,9 @@ public enum ErrorCodes {
 
 	EMAIL_SENDING_FAILED(305, HttpStatus.INTERNAL_SERVER_ERROR, "信件發送失敗，請稍後再試"),
 	
-	INTERNAL_ERROR(306, HttpStatus.INTERNAL_SERVER_ERROR, "發生未知錯誤，請稍後再試");
+	INTERNAL_ERROR(306, HttpStatus.INTERNAL_SERVER_ERROR, "發生未知錯誤，請稍後再試"),
+	
+	JWT_INVALID(307, HttpStatus.UNAUTHORIZED, "JWT錯誤，請重新登入");
 	
 
 	@Getter

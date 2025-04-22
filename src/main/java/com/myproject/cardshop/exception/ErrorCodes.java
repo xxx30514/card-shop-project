@@ -1,7 +1,6 @@
 package com.myproject.cardshop.exception;
 
 import org.springframework.http.HttpStatus;
-
 import lombok.Getter;
 
 public enum ErrorCodes {
@@ -37,5 +36,5 @@ public enum ErrorCodes {
 		this.description = description;
 		this.httpStatus = httpStatus;
 	}
-
+	
 }

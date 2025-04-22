@@ -1,4 +1,4 @@
-package com.myproject.cardshop.handler;
+package com.myproject.cardshop.exception;
 
 import java.util.HashSet;
 import java.util.Set;

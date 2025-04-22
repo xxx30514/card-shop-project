@@ -51,7 +51,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())).csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()// 定義不須過濾的請求路徑
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**","/demo-controller/**").permitAll()// 定義不須過濾的請求路徑
 						.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))// 設定為無狀態
 				.authenticationProvider(authenticationProvider) // 使用自定義的 AuthenticationProvider 處理身分驗證

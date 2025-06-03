@@ -115,7 +115,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 		// 確認使用者是否存在
 		User user = userRepository.findById(savedToken.getUser().getId())
-				.orElseThrow(() -> new UsernameNotFoundException("查無使用者"));
+				.orElseThrow(() -> new UsernameNotFoundException("查無此帳號"));
 		// 啟動帳號
 		user.setAccountEnabled(true);
 		userRepository.save(user);

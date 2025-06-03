@@ -1,10 +1,8 @@
-package com.myproject.cardshop.exception.util;
+package com.myproject.cardshop.common.exception;
 
 import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.myproject.cardshop.exception.ErrorCodes;
-import com.myproject.cardshop.exception.ExceptionResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**

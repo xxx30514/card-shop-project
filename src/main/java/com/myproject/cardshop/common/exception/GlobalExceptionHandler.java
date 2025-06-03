@@ -1,4 +1,4 @@
-package com.myproject.cardshop.exception;
+package com.myproject.cardshop.common.exception;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -60,7 +61,12 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ExceptionResponse> handleJwtException(Exception exception) {
 		return buildExceptionResponse(ErrorCodes.JWT_INVALID, exception);
 	}
-
+	
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<ExceptionResponse> handleUsernameNotFoundException(UsernameNotFoundException exception) {
+		return buildExceptionResponse(ErrorCodes.USER_NOT_FOUND, exception);
+	}
+	
 	// 公共方法處理多數錯誤響應 減少重複程式碼
 	private ResponseEntity<ExceptionResponse> buildExceptionResponse(ErrorCodes errorCode, Exception exception) {
 		return ResponseEntity.status(errorCode.getHttpStatus())

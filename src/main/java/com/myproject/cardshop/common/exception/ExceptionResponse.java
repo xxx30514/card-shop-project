@@ -1,4 +1,4 @@
-package com.myproject.cardshop.exception;
+package com.myproject.cardshop.common.exception;
 
 import java.util.Map;
 import java.util.Set;

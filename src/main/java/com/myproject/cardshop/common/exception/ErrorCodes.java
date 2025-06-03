@@ -1,9 +1,8 @@
-package com.myproject.cardshop.exception;
+package com.myproject.cardshop.common.exception;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -28,7 +27,9 @@ public enum ErrorCodes {
 
 	INTERNAL_ERROR(306, HttpStatus.INTERNAL_SERVER_ERROR, "發生未知錯誤，請稍後再試"),
 
-	JWT_INVALID(307, HttpStatus.UNAUTHORIZED, "JWT錯誤，請重新登入", createJwtExceptionMessages());
+	JWT_INVALID(307, HttpStatus.UNAUTHORIZED, "JWT錯誤，請重新登入", createJwtExceptionMessages()),
+	
+	USER_NOT_FOUND(308, HttpStatus.NOT_FOUND, "查無此帳號");
 
 	@Getter
 	private final int code;

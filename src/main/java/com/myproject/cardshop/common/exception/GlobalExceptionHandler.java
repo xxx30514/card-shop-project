@@ -50,6 +50,19 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(ExceptionResponse.builder().validationErrors(errors).build());
 	}
+//	@ExceptionHandler(MethodArgumentNotValidException.class) 還未測試
+//	public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+//	    Map<String, String> errors = new HashMap<>();
+//	    exception.getBindingResult().getFieldErrors().forEach(error -> {
+//	        errors.put(error.getField(), error.getDefaultMessage());
+//	    });
+//	    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//	        .body(ExceptionResponse.builder()
+//	            .errorCode(400)
+//	            .errorDescription("參數驗證錯誤")
+//	            .errors(errors)
+//	            .build());
+//	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionResponse> handleException(Exception exception) {

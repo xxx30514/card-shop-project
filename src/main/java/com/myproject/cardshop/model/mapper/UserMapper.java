@@ -1,12 +1,14 @@
 package com.myproject.cardshop.model.mapper;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.myproject.cardshop.model.User;
 import com.myproject.cardshop.model.dto.UserDTO;
 
-public class UserConverter {
+@Service
+public class UserMapper {
 
-	public static UserDTO toDto(User user) {
+	public UserDTO toDto(User user) {
 		List<String> roleNames = user.getRoles().stream().map(role -> role.getName()).toList();
 		return new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), roleNames,
 				user.getFullName());

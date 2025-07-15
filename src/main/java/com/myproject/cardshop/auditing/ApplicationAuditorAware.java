@@ -29,7 +29,7 @@ public class ApplicationAuditorAware implements AuditorAware<String> {
 		if (principal instanceof UserDetails) {
 			return Optional.of(((UserDetails) principal).getUsername());
 		}
-		// 處理其他類型的principal例如JWT中解析的username
+		// 處理其他類型的principal例如JWT中解析的username 目前jwt filter設定不會走到這 未來有擴充可能
 		if (principal instanceof String) {
 			return Optional.of((String) principal);
 		}

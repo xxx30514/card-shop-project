@@ -1,8 +1,8 @@
-package com.myproject.cardshop.model.dto;
+package com.myproject.cardshop.model.mapper;
 
 import java.util.List;
-
 import com.myproject.cardshop.model.User;
+import com.myproject.cardshop.model.dto.UserDTO;
 
 public class UserConverter {
 

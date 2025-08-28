@@ -1,9 +1,9 @@
 package com.myproject.cardshop.service;
 
+import com.myproject.cardshop.model.dto.UserDTO;
 import com.myproject.cardshop.security.dto.AuthenticateRequset;
 import com.myproject.cardshop.security.dto.AuthenticationResponse;
 import com.myproject.cardshop.security.dto.RegisterRequset;
-
 import jakarta.mail.MessagingException;
 
 public interface AuthenticationService {
@@ -15,6 +15,8 @@ public interface AuthenticationService {
 	void activateAccount(String token) throws MessagingException;
 	
 	void resendValidationEmail(String email) throws MessagingException;
+	
+	UserDTO getUserByEmail(String email);
 
 
 }

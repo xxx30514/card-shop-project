@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import com.myproject.cardshop.email.EmailTemplateName;
 import com.myproject.cardshop.model.Role;
 import com.myproject.cardshop.model.Token;
 import com.myproject.cardshop.model.User;
+import com.myproject.cardshop.model.dto.UserDTO;
+import com.myproject.cardshop.model.mapper.UserMapper;
 import com.myproject.cardshop.repository.RoleRepository;
 import com.myproject.cardshop.repository.TokenRepository;
 import com.myproject.cardshop.repository.UserRepository;
@@ -45,6 +48,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private final PasswordEncoder passwordEncoder;
 
 	private final AuthenticationManager authenticationManager;
+	
+	private final UserDetailsService userDetailsService;
+
+	private final UserMapper userMapper;
 
 	@Value("${application.mailing.fronted.activation-url}")
 	private String activationUrl;
@@ -74,9 +81,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	// 寄出帳號驗證信
 	private void sendValidationEmail(User user) throws MessagingException {
-		  if (user.isAccountEnabled() == true) {
-		        throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
-		    }
+		if (user.isAccountEnabled() == true) {
+			throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
+		}
 		String newToken = generateAndSaveActivationToken(user);
 		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl,
 				newToken, "【cardshop】會員註冊通知");
@@ -108,10 +115,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Transactional
 	public void activateAccount(String token) throws MessagingException {
 		// 確認啟動碼是否存在
-		Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new RuntimeException("無效的Token"));
+		Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new IllegalArgumentException("無效的Token"));
 		// 確認啟動碼是否過期
 		if (LocalDateTime.now().isAfter(savedToken.getExpiredAt())) {
-			throw new RuntimeException("帳號啟動碼已過期，請重新進行認證");
+			throw new IllegalArgumentException("帳號啟動碼已過期，請重新進行認證");
 		}
 		// 確認使用者是否存在
 		User user = userRepository.findById(savedToken.getUser().getId())
@@ -129,18 +136,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public void resendValidationEmail(String email) throws MessagingException {
 		// 根據 email 查詢 User
 		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalStateException("查無使用者"));
-		 if (user.isAccountEnabled()) {
-		        throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
-		    }
+		if (user.isAccountEnabled()) {
+			throw new IllegalStateException("帳號已經啟用，無需再次發送驗證信");
+		}
 		// 查詢是否有有效的啟動碼 可能有多個有效token存在 要做處理 只取最後到期的那一個token
-		Token token = tokenRepository.findByUserAndExpiredAtAfter(user, LocalDateTime.now()).stream().reduce((first, second) -> second).orElse(null);
-		// 如果啟動碼有效且距離上次發送不足一定時間　限制再次發送驗證信
+		Token token = tokenRepository.findByUserAndExpiredAtAfter(user, LocalDateTime.now()).stream()
+				.reduce((first, second) -> second).orElse(null);
+		// 如果啟動碼有效且距離上次發送不足一定時間 限制再次發送驗證信
 		if (token != null && token.getCreatedAt().plusMinutes(5).isAfter(LocalDateTime.now())) {
 			throw new RuntimeException("您已經在5分鐘內發送過認證信，請稍後再試");
 		}
 		String newToken = generateAndSaveActivationToken(user);
-		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT,
-				activationUrl, newToken, "【cardshop】會員註冊通知");
+		emailService.sendEmail(user.getEmail(), user.getFullName(), EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl,
+				newToken, "【cardshop】會員註冊通知");
+	}
+
+	// 根據email查詢使用者
+	@Override
+	public UserDTO getUserByEmail(String email) {
+		User user = (User) userDetailsService.loadUserByUsername(email);
+		return userMapper.toDto(user);
 	}
 
 }

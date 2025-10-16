@@ -57,11 +57,11 @@ public class SecurityConfig {
 				.exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, authException) -> {
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					response.setContentType("application/json;charset=UTF-8");
-					response.getWriter().write("{\"error\":\"無效的Token\"}");
+					response.getWriter().write("{\"errorDescription\":\"無效的Token\"}");
 				}).accessDeniedHandler((request, response, accessDeniedException) -> {
 					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 					response.setContentType("application/json;charset=UTF-8");
-					response.getWriter().write("{\"error\":\"權限不足\"}");
+					response.getWriter().write("{\"errorDescription\":\"權限不足\"}");
 				})).authenticationProvider(authenticationProvider) // 使用自定義的 AuthenticationProvider 處理身分驗證
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);// 過濾器的順序設定
 		return httpSecurity.build();

@@ -1,8 +1,8 @@
 spring:      
   datasource:
     url: jdbc:mysql://localhost:3306/cardshop_db?createDatabaseIfNotExist=true&serverTimezone=GMT%2B8
-    username: pm
-    password: pm
+    username: ${DB_USERNAME:pm}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -12,8 +12,8 @@ spring:
   mail:
     host: localhost
     port: 1025
-    username: root
-    password: root
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -27,8 +27,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: guest
-    password: guest 
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
     virtual-host: /                
   mvc:
     hiddenmethod:
@@ -51,7 +51,7 @@ cardstore:
 application:
  security:
   jwt:
-   secrect-key: sN5MEgklixS7inZPIrg8gus9X+fo7FNRK+ZhjU7nAgI=
+   secret-key: ${JWT_SECRET_KEY}
    expiration: 86400000  
  mailing:
   fronted:
